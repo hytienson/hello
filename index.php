@@ -1,7 +1,7 @@
-<?php require "layout/header.php"; ?>
+<?php require "layout/header.php"; // Đây là dòng code để require (kết nối) file header.php ?> 
 <?php
-require_once('database/config.php');
-require_once('database/dbhelper.php');
+require_once('database/config.php'); // Kết nối đến file cấu hình database
+require_once('database/dbhelper.php'); // Kết nối đến file chứa các hàm xử lý database
 ?>
 <!-- END HEADR -->
 <main>
@@ -16,16 +16,16 @@ require_once('database/dbhelper.php');
             <section class="main-layout">
                 <div class="row">
                     <?php
-                    $sql = 'select * from category';
-                    $categoryList = executeResult($sql);
-                    $index = 1;
-                    foreach ($categoryList as $item) {
+                    $sql = 'select * from category';  // Truy vấn danh sách các loại thức ăn
+                    $categoryList = executeResult($sql); // Thực hiện truy vấn và lấy kết quả
+                    $index = 1; // Biến đếm cho vòng lặp
+                    foreach ($categoryList as $item) { // Hiển thị thông tin về từng loại thức ăn
                         echo '
                                     <div class="box">
                                         <a href="thucdon.php?id_category=' . $item['id'] . '">
                                             <p>' . $item['name'] . '</p>
                                             <div class="bg"></div>
-                                            <img src="images/bg/gantoi.jpeg" alt="">
+                                            <img src="images/bg/tải xuống.jpg" alt="">
                                         </a>
                                     </div>
                                     ';
@@ -47,9 +47,10 @@ require_once('database/dbhelper.php');
                     <div class="row">
                         <?php
                         $sql = 'SELECT * from product, order_details where order_details.product_id=product.id order by order_details.num DESC limit 4';
-                        $productList = executeResult($sql);
-                        $index = 1;
-                        foreach ($productList as $item) {
+                        // Truy vấn và lấy danh sách sản phẩm được yêu thích nhất
+                        $productList = executeResult($sql);// Thực hiện truy vấn và lấy kết quả
+                        $index = 1; // Biến đếm cho vòng lặp
+                        foreach ($productList as $item) { // Hiển thị thông tin về từng sản phẩm được yêu thích
                             echo '
                                 <div class="col">
                                     <a href="details.php?id=' . $item['product_id'] . '">
@@ -82,7 +83,7 @@ require_once('database/dbhelper.php');
 
             <section class="restaurants">
                 <div class="title">
-                    <h1>Thực đơn tại quán <span class="green">Holy Coffee</span></h1>
+                    <h1>Thực đơn tại quán <span class="green">Nhóm 5 Coffee</span></h1>
                 </div>
                 <div class="product-restaurants">
                     <div class="row">
@@ -95,13 +96,13 @@ require_once('database/dbhelper.php');
                             }
                             $limit = 12;
                             $start = ($page - 1) * $limit;
-                            $sql = "SELECT * FROM product limit $start,$limit";
+                            $sql = "SELECT * FROM product limit $start,$limit";// Truy vấn danh sách sản phẩm theo trang
                             executeResult($sql);
                             // $sql = 'select * from product limit $star,$limit';
                             $productList = executeResult($sql);
 
                             $index = 1;
-                            foreach ($productList as $item) {
+                            foreach ($productList as $item) {// Hiển thị thông tin về từng sản phẩm
                                 echo '
                                 <div class="col">
                                     <a href="details.php?id=' . $item['id'] . '">
@@ -134,12 +135,12 @@ require_once('database/dbhelper.php');
                     <div class="pagination">
                         <ul>
                             <?php
-                            $sql = "SELECT * FROM `product`";
-                            $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
-                            $result = mysqli_query($conn, $sql);
+                            $sql = "SELECT * FROM `product`";// Truy vấn để đếm tổng số sản phẩm
+                            $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);// Kết nối đến cơ sở dữ liệu
+                            $result = mysqli_query($conn, $sql);// Thực hiện truy vấn
                             if (mysqli_num_rows($result)) {
-                                $numrow = mysqli_num_rows($result);
-                                $current_page = ceil($numrow / 12);
+                                $numrow = mysqli_num_rows($result);// Đếm số sản phẩm
+                                $current_page = ceil($numrow / 12);// Tính số trang dựa trên số sản phẩm và số sản phẩm trên mỗi trang
                                 // echo $current_page;
                             }
                             for ($i = 1; $i <= $current_page; $i++) {
@@ -161,7 +162,8 @@ require_once('database/dbhelper.php');
         </section>
     </div>
 </main>
-<?php require_once('layout/footer.php'); ?>
+<?php require_once('layout/footer.php'); // Kết nối đến file footer.php
+?>
 </div>
 </body>
 

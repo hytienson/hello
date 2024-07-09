@@ -1,6 +1,7 @@
 <?php
-require_once('../database/config.php');
-require_once('../database/dbhelper.php');
+// Import các tệp cần thiết
+require_once('../database/config.php');// Đây là tệp cấu hình database
+require_once('../database/dbhelper.php');// Đây là tệp hỗ trợ thao tác với database
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@ require_once('../database/dbhelper.php');
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Latest compiled and minified CSS -->
+  <!-- Liên kết tới các tệp CSS và JavaScript cần thiết, bao gồm Bootstrap và Font Awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -20,11 +21,12 @@ require_once('../database/dbhelper.php');
   <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
 
   <link rel="stylesheet" href="header.css">
+  <!-- Liên kết tới tệp CSS cho phần header -->
   <title>Đăng ký tài khoản</title>
 </head>
 
 <body>
-  <div id="wrapper" style="padding-bottom: 4rem;">
+  <div id="wrapper" style="padding-bottom: 4rem;"> 
     <header>
       <div class="container">
         <section class="logo">
@@ -37,6 +39,7 @@ require_once('../database/dbhelper.php');
               <a href="../thucdon.php?page=thucdon">Thực đơn</a>
               <ul class="nav-con">
                 <?php
+                // Truy vấn database để lấy danh sách các danh mục và tạo các liên kết dựa trên kết quả
                 $sql = "SELECT * FROM category";
                 $result = executeResult($sql);
                 foreach ($result as $item) {
@@ -57,6 +60,7 @@ require_once('../database/dbhelper.php');
           <div class="cart">
             <a href="../cart.php"><img src="../images/icon/cart.svg" alt=""></a>
             <?php
+            // Kiểm tra giỏ hàng và đếm số lượng món trong giỏ hàng
             $cart = [];
             if (isset($_COOKIE['cart'])) {
               $json = $_COOKIE['cart'];
@@ -70,6 +74,7 @@ require_once('../database/dbhelper.php');
           </div>
           <div class="login">
             <?php
+            // Kiểm tra đăng nhập và hiển thị thông tin người dùng hoặc nút đăng nhập
             if (isset($_COOKIE['username'])) {
               echo '<a style="color:black;" href="">' . $_COOKIE['username'] . '</a>
                             <div class="logout">
@@ -115,6 +120,7 @@ require_once('../database/dbhelper.php');
           <label for="">Email:</label>
           <input type="email" name="email" class="form-control" placeholder="Email" required="required">
         </div>
+        <!-- Dòng sau là checkbox (chưa được sử dụng) -->
         <!-- <div class="form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
@@ -128,6 +134,11 @@ require_once('../database/dbhelper.php');
   </div>
 
   <?php
+  // Import lại các tệp cần thiết (không cần thiết lặp lại import, nhưng có thể để ý là cùng tệp đã được import ở đầu)
+  // require_once('../database/config.php');
+  // require_once('../database/dbhelper.php');
+
+  // Xử lý khi form được gửi đi
   require_once('../database/config.php');
   require_once('../database/dbhelper.php');
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -138,7 +149,8 @@ require_once('../database/dbhelper.php');
       $repass = $_POST['repassword'];
       $phone = $_POST['phone'];
       $email = $_POST['email'];
-      //kiểm tra trùng paswword không
+
+      // Kiểm tra xem mật khẩu nhập lại có trùng với mật khẩu không
       if ($pass != $repass) {
         echo '<script language="javascript">
                     alert("Nhập không trùng mật khẩu, vui lòng đăng ký lại!");
@@ -146,7 +158,7 @@ require_once('../database/dbhelper.php');
               </script>';
         die();
       }
-      //kiểm tra username
+      // Kiểm tra xem tài khoản hoặc email đã được sử dụng chưa
       $sql = "SELECT * FROM user where username = '$username' OR email='$email'";
       $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
       $result = mysqli_query($conn, $sql);
@@ -157,13 +169,18 @@ require_once('../database/dbhelper.php');
              </script>';
         die();
       }
+
+      // Thực hiện thêm thông tin người dùng vào database nếu thông tin hợp lệ
       $sql = 'INSERT INTO user(hoten,username,password,phone,email) values ("' . $name . '","' . $username . '","' . $pass . '","' . $phone . '","' . $email . '")';
       execute($sql);
+
+      // Thông báo khi đăng ký thành công và chuyển hướng đến trang đăng nhập
       echo '<script language="javascript">
                 alert("Bạn đăng ký thành công!");
                 window.location = "login.php";
              </script>';
     } else {
+      // Thông báo lỗi nếu không nhập đủ thông tin
       echo '<script language="javascript">
     alert("hãy nhập đủ thông tin!");
     window.location = "reg.php";

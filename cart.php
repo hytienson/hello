@@ -1,21 +1,23 @@
 <?php
 require_once('database/dbhelper.php');
 require_once('utils/utility.php');
-
+// Khởi tạo giỏ hàng rỗng
     $cart = [];
+    // Kiểm tra nếu có cookie giỏ hàng
     if (isset($_COOKIE['cart'])) {
         $json = $_COOKIE['cart'];
         $cart = json_decode($json, true);
     }
+    // Tạo danh sách các ID sản phẩm trong giỏ hàng
     $idList = [];
     foreach ($cart as $item) {
         $idList[] = $item['id'];
     }
+    // Kiểm tra có sản phẩm trong giỏ hàng hay không
     if (count($idList) > 0) {
-        $idList = implode(',', $idList); // chuyeern
-        //[2, 5, 6] => 2,5,6
+        $idList = implode(',', $idList);  // Chuyển danh sách ID thành một chuỗi phân cách bằng dấu phẩy
 
-        $sql = "select * from product where id in ($idList)";
+        $sql = "select * from product where id in ($idList)";// Truy vấn CSDL để lấy danh sách sản phẩm từ danh sách ID
         $cartList = executeResult($sql);
     } else {
         $cartList = [];
@@ -122,7 +124,7 @@ require_once('utils/utility.php');
                 location.reload()
             })
         }
-
+        // Thêm mã kiểm tra đăng nhập tại đây nếu cần thiết
         function checkLogin() {
 
         }

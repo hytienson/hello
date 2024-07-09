@@ -1,6 +1,7 @@
 <?php
-require_once('../database/config.php');
-require_once('../database/dbhelper.php');
+// Bắt đầu bằng việc bao gồm các tệp cần thiết để kết nối với cơ sở dữ liệu và thao tác với nó.
+require_once('../database/config.php');// Nạp tệp chứa thông tin cấu hình cơ sở dữ liệu.
+require_once('../database/dbhelper.php');// Nạp tệp chứa các hàm trợ giúp cho việc thao tác với cơ sở dữ liệu.
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@ require_once('../database/dbhelper.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
+    <!-- Liên kết tới các tệp CSS và JavaScript cần thiết từ các nguồn bên ngoài -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,9 +20,9 @@ require_once('../database/dbhelper.php');
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
 
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="header.css"><!-- Liên kết tới tệp CSS cho phần header trang web -->
 
-    <title>Đăng nhập</title>
+    <title>Đăng nhập</title><!-- Đặt tiêu đề cho trang web -->
 </head>
 
 <body>
@@ -38,16 +39,14 @@ require_once('../database/dbhelper.php');
                             <a href="../thucdon.php?page=thucdon">Thực đơn</a>
                             <ul class="nav-con">
                                 <?php
+                                // Truy vấn cơ sở dữ liệu để lấy danh sách các danh mục và hiển thị chúng trong menu dọc.
                                 $sql = "SELECT * FROM category";
                                 $result = executeResult($sql);
                                 foreach ($result as $item) {
                                     echo '<li><a href="../thucdon.php?id_category=' . $item['id'] . '">' . $item['name'] . '</a></li>';
                                 }
                                 ?>
-                                <!-- <li><a href="thucdon.php?page=trasua">Trà sữa</a></li>
-                                <li><a href="thucdon.php?page=monannhe">Món ăn nhẹ</a></li>
-                                <li><a href="thucdon.php?page=banhmi">Bánh mì</a></li>
-                                <li><a href="thucdon.php?page=caphe">Cà phê</a></li> -->
+                                
                             </ul>
                         </li>
                         <li><a href="../about.php">Về chúng tôi</a></li>
@@ -58,6 +57,7 @@ require_once('../database/dbhelper.php');
                     <div class="cart">
                         <a href="../cart.php"><img src="../images/icon/cart.svg" alt=""></a>
                         <?php
+                        // Kiểm tra và hiển thị số lượng sản phẩm trong giỏ hàng (lấy từ cookie).
                         $cart = [];
                         if (isset($_COOKIE['cart'])) {
                             $json = $_COOKIE['cart'];
@@ -65,12 +65,13 @@ require_once('../database/dbhelper.php');
                         }
                         $count = 0;
                         foreach ($cart as $item) {
-                            $count += $item['num']; // đếm tổng số item
+                            $count += $item['num']; // Đếm tổng số sản phẩm trong giỏ hàng.
                         }
                         ?>
                     </div>
                     <div class="login">
                         <?php
+                        // Kiểm tra xem người dùng đã đăng nhập hay chưa, và hiển thị thông tin đăng nhập hoặc nút đăng nhập tương ứng.
                         if (isset($_COOKIE['username'])) {
                             echo '<a style="color:black;" href="">' . $_COOKIE['username'] . '</a>
                             <div class="logout">
@@ -109,6 +110,7 @@ require_once('../database/dbhelper.php');
         </div>
     </div>
     <?php
+    // Bắt đầu kết nối lại với cơ sở dữ liệu và xử lý đăng nhập người dùng.
     require_once('../database/config.php');
     require_once('../database/dbhelper.php');
     if (isset($_POST["submit"]) && $_POST["username"] != '' && $_POST["password"] != '') {

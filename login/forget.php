@@ -1,6 +1,7 @@
-<?php require('connect.php') ?>
+<?php require('connect.php') ?> 
+// Kết nối đến cơ sở dữ liệu bằng cách sử dụng tệp 'connect.php'
 <?php
-require_once('../database/dbhelper.php');
+require_once('../database/dbhelper.php');// Bao gồm tệp 'dbhelper.php' để sử dụng các chức năng của nó
 ?>
 <!doctype html>
 <html lang="en">
@@ -28,7 +29,7 @@ require_once('../database/dbhelper.php');
                             <ul class="nav-con">
                                 <?php
                                 $sql = "SELECT * FROM category";
-                                $result = executeResult($sql);
+                                $result = executeResult($sql);// Thực hiện truy vấn SQL và lấy kết quả sử dụng hàm executeResult từ 'dbhelper.php'
                                 foreach ($result as $item) {
                                     echo '<li><a href="../thucdon.php?id_category=' . $item['id'] . '">' . $item['name'] . '</a></li>';
                                 }
@@ -50,11 +51,11 @@ require_once('../database/dbhelper.php');
                         $cart = [];
                         if (isset($_COOKIE['cart'])) {
                             $json = $_COOKIE['cart'];
-                            $cart = json_decode($json, true);
+                            $cart = json_decode($json, true);// Lấy dữ liệu giỏ hàng từ cookie và giải mã thành mảng PHP
                         }
                         $count = 0;
                         foreach ($cart as $item) {
-                            $count += $item['num']; // đếm tổng số item
+                            $count += $item['num']; // Đếm tổng số mục trong giỏ hàng
                         }
                         ?>
                     </div>
@@ -68,7 +69,7 @@ require_once('../database/dbhelper.php');
                             </div>
                             ';
                         } else {
-                            echo '<a href="login.php"">Đăng nhập</a>';
+                            echo '<a href="login.php"">Đăng nhập</a>';// Hiển thị liên kết "Đăng nhập" nếu người dùng chưa đăng nhập
                         }
 
                         ?>
@@ -101,7 +102,7 @@ require_once('../database/dbhelper.php');
                 <?php
                 $previous = "javascript:history.go(-1)";
                 if (isset($_SERVER['HTTP_REFERER'])) {
-                    $previous = $_SERVER['HTTP_REFERER'];
+                    $previous = $_SERVER['HTTP_REFERER'];// Lấy URL trước đó nếu có
                 }
                 ?>
                 <a href="<?= $previous ?>" class="btn btn-warning">Quay lại</a>

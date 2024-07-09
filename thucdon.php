@@ -12,11 +12,13 @@
         <!-- END LAYOUT  -->
         <section class="main">
             <?php
+            // Kiểm tra xem có tham số 'page' trong URL không
             if (isset($_GET['page'])) {
                 $page = trim(strip_tags($_GET['page']));
             } else {
                 $page = "";
             }
+            // Kiểm tra giá trị của 'page' và thực hiện tương ứng
             switch ($page) {
                 case "thucdon":
                     require('menu-con/trasua.php');
@@ -25,9 +27,10 @@
                     require('menu-con/banhmi.php');
                     break;
                 default:
+                // Các tùy chọn khác (nếu có)
                     break;
             }
-            //switch
+           // Kiểm tra xem có tham số 'id_category' trong URL không
             if (isset($_GET['id_category'])) {
                 $id_category = trim(strip_tags($_GET['id_category']));
             } else {
@@ -37,6 +40,7 @@
             <section class="recently">
                 <div class="title">
                     <?php
+                    // Lấy tên category từ cơ sở dữ liệu dựa trên 'id_category'
                     $sql = "select * from category where id=$id_category";
                     $name = executeResult($sql);
                     foreach ($name as $ten) {
@@ -47,6 +51,7 @@
                 <div class="product-recently">
                     <div class="row">
                         <?php
+                        // Lấy danh sách sản phẩm dựa trên 'id_category'
                         $sql = "select * from product where id_category=$id_category";
                         $productList = executeResult($sql);
                         foreach ($productList as $item) {
@@ -76,6 +81,7 @@
                         }
                         ?>
                         <?php
+                        // Kiểm tra xem có tham số 'search' trong URL không
                         if (isset($_GET['search'])) {
                             $search = $_GET['search'];
                             $sql = "SELECT * from product where title like '%$search%'";

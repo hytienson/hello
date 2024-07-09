@@ -2,22 +2,29 @@
 require_once('database/dbhelper.php');
 require_once('utils/utility.php');
 require_once('api/checkout-form.php');
+// Khởi tạo mảng $cart rỗng
 $cart = [];
+// Kiểm tra xem cookie 'cart' có tồn tại hay không
 if (isset($_COOKIE['cart'])) {
     $json = $_COOKIE['cart'];
     $cart = json_decode($json, true);
 }
+// Tạo mảng $idList để lưu danh sách id sản phẩm từ giỏ hàng
 $idList = [];
+// Lặp qua mảng $cart và lấy ra danh sách id sản phẩm
 foreach ($cart as $item) {
     $idList[] = $item['id'];
 }
+// Kiểm tra nếu có ít nhất một id sản phẩm trong giỏ hàng
 if (count($idList) > 0) {
-    $idList = implode(',', $idList); // chuyeern
-    //[2, 5, 6] => 2,5,6
-
+    // Chuyển mảng $idList thành một chuỗi được nối với dấu phẩy
+    $idList = implode(',', $idList); 
+   
+    // Tạo câu truy vấn SQL để lấy thông tin sản phẩm từ CSDL
     $sql = "select * from product where id in ($idList)";
     $cartList = executeResult($sql);
 } else {
+    // Nếu không có id sản phẩm nào, gán $cartList là một mảng rỗng
     $cartList = [];
 }
 ?>
@@ -58,7 +65,7 @@ if (count($idList) > 0) {
                         }
                         $count = 0;
                         foreach ($cart as $item) {
-                            $count += $item['num']; // đếm tổng số item
+                            $count += $item['num'];  // Đếm tổng số item trong giỏ hàng
                         }
                         ?>
                     </div>

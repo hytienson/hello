@@ -1,19 +1,19 @@
 !DOCTYPE html>
 <html lang="en">
 <?php
-require_once('database/config.php');
-require_once('database/dbhelper.php');
+require_once('database/config.php'); // Import tệp cấu hình của cơ sở dữ liệu
+require_once('database/dbhelper.php');// Import tệp hỗ trợ truy vấn cơ sở dữ liệu
 ?>
 
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/product.css">
-    <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
-    <title>Holy Coffee</title>
+    <meta charset="UTF-8"> <!-- Thiết lập bộ kí tự cho trang là UTF-8 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Thiết lập chế độ tương thích trình duyệt -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Thiết lập hiển thị trên thiết bị di động -->
+    <link rel="stylesheet" href="css/index.css"><!-- Liên kết đến tệp CSS để trang web có thể định dạng lại -->
+    <link rel="stylesheet" href="css/product.css"><!-- Liên kết đến tệp CSS để trang web có thể định dạng lại -->
+    <link rel="stylesheet" href="plugin/fontawesome/css/all.css"><!-- Liên kết đến tệp CSS của FontAwesome cho biểu tượng -->
+    <title>Codedoan Coffee</title><!-- Thiết lập tiêu đề trang -->
 </head>
 
 <body>
@@ -21,19 +21,19 @@ require_once('database/dbhelper.php');
         <header>
             <div class="container">
                 <section class="logo">
-                    <a href=""><img src="images/logo-grabfood.svg" alt=""></a>
+                    <a href=""><img src="images/logo-grabfood.svg" alt=""></a><!-- Đặt logo và liên kết về trang chính -->
                     <section class="location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <input type="text" placeholder="Nhập địa chỉ của bạn">
+                        <i class="fas fa-map-marker-alt"></i><!-- Sử dụng biểu tượng FontAwesome cho địa chỉ -->
+                        <input type="text" placeholder="Nhập địa chỉ của bạn"><!-- Ô nhập địa chỉ -->
                     </section>
                 </section>
 
-                <section class="menu-right">
+                <section class="menu-right"><!-- Phần menu bên phải -->
                     <div class="cart">
-                        <a href=""><img src="images/icon/cart.svg" alt=""></a>
+                        <a href=""><img src="images/icon/cart.svg" alt=""></a><!-- Biểu tượng giỏ hàng và liên kết đến trang giỏ hàng -->
                     </div>
                     <div class="login">
-                        <a href="">Đăng nhập</a>
+                        <a href="">Đăng nhập</a> <!-- Liên kết đến trang đăng nhập -->
                     </div>
                 </section>
             </div>
@@ -43,7 +43,7 @@ require_once('database/dbhelper.php');
             <div class="container">
                 <div id="ant-layout">
                     <section class="search-quan">
-                        <i class="fas fa-search"></i>
+                        <i class="fas fa-search"></i> <!-- Biểu tượng tìm kiếm và ô nhập tìm kiếm -->
                         <input type="text" placeholder="Tìm món hoặc thức ăn">
                     </section>
                 </div>
@@ -52,7 +52,7 @@ require_once('database/dbhelper.php');
                 </div>
                 <!-- END LAYOUT  -->
                 <section class="main">
-                    <section class="oder-product">
+                    <section class="oder-product"> <!-- Phần sản phẩm đặt hàng -->
                         <div class="title">
                             <section class="main-order">
                                 <h1>Tên sp</h1>
@@ -73,7 +73,7 @@ require_once('database/dbhelper.php');
                                             <input type="number">
                                         </div>
                                         <p class="price">Giá: <span>100.000 VNĐ</span></p>
-                                        <a class="buy-now" href="">Mua ngay</a>
+                                        <a class="buy-now" href="">Mua ngay</a><!-- Liên kết đến trang đặt hàng -->
 
                                     </div>
                                 </div>
@@ -83,8 +83,8 @@ require_once('database/dbhelper.php');
                             <h1>Gợi ý cho bạn</h1>
                             <div class="row">
                                 <?php
-                                $sql = 'select * from product limit 3';
-                                $productList = executeResult($sql);
+                                $sql = 'select * from product limit 3';// Truy vấn cơ sở dữ liệu để lấy 3 sản phẩm
+                                $productList = executeResult($sql);// Thực hiện truy vấn và lấy danh sách sản phẩm
                                 $index = 1;
                                 foreach ($productList as $item) {
                                     echo '
@@ -112,23 +112,23 @@ require_once('database/dbhelper.php');
                         <h1>Nhận xét</h1>
                         <div class="container">
                             <div class="post">
-                                <textarea name="" id="" cols="50" rows="10"></textarea>
-                                <button>Xuất bản</button>
+                                <textarea name="" id="" cols="50" rows="10"></textarea><!-- Ô nhập bình luận -->
+                                <button>Xuất bản</button><!-- Nút xuất bản bình luận -->
                             </div>
                             
                         </div>
                     </section>
 
                     <!-- end comment -->
-                    <section class="restaurants">
+                    <section class="restaurants"> <!-- Phần thực đơn tại quán -->
                         <div class="title">
-                            <h1>Thực đơn tại quán <span class="green">Holy coffee</span></h1>
+                            <h1>Thực đơn tại quán <span class="green">Nhóm 5 coffee</span></h1>
                         </div>
                         <div class="product-restaurants">
                             <div class="row">
                                 <?php
-                                $sql = 'select * from product';
-                                $productList = executeResult($sql);
+                                $sql = 'select * from product';// Truy vấn cơ sở dữ liệu để lấy tất cả sản phẩm
+                                $productList = executeResult($sql);// Thực hiện truy vấn và lấy danh sách sản phẩm
                                 $index = 1;
                                 foreach ($productList as $item) {
                                     echo '

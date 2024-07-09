@@ -1,4 +1,5 @@
 <?php
+// Kết nối đến file cấu hình và hàm helper của cơ sở dữ liệu
 require_once('../database/config.php');
 require_once('../database/dbhelper.php');
 ?>
@@ -9,20 +10,23 @@ require_once('../database/dbhelper.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
+    <!-- Sử dụng CSS đã được biên dịch và nén từ Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <!-- jQuery library -->
+    <!-- Thư viện jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Popper JS -->
+    <!-- Thư viện Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
+    <!-- Sử dụng JavaScript đã được biên dịch và nén từ Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Sử dụng file CSS tùy chỉnh từ header.css -->
     <link rel="stylesheet" href="header.css">
 
     <title>Đăng nhập</title>
 </head>
 <body>
+    <!-- Thẻ mở của phần nội dung trang web -->
     <div id="wrapper" style="padding-bottom: 4rem;">
+    <!-- Phần đầu trang web (header) -->
     <header>
             <div class="container">
                 <section class="logo">
@@ -35,6 +39,7 @@ require_once('../database/dbhelper.php');
                             <a href="../thucdon.php?page=thucdon">Thực đơn</a>
                             <ul class="nav-con">
                                 <?php
+                                // Truy vấn và lặp qua danh mục từ cơ sở dữ liệu
                                 $sql = "SELECT * FROM category";
                                 $result = executeResult($sql);
                                 foreach ($result as $item) {
@@ -55,6 +60,7 @@ require_once('../database/dbhelper.php');
                     <div class="cart">
                         <a href="../cart.php"><img src="../images/icon/cart.svg" alt=""></a>
                         <?php
+                        // Kiểm tra và hiển thị số lượng sản phẩm trong giỏ hàng
                         $cart = [];
                         if (isset($_COOKIE['cart'])) {
                             $json = $_COOKIE['cart'];
@@ -62,12 +68,13 @@ require_once('../database/dbhelper.php');
                         }
                         $count = 0;
                         foreach ($cart as $item) {
-                            $count += $item['num']; // đếm tổng số item
+                            $count += $item['num']; // Đếm tổng số sản phẩm
                         }
                         ?>
                     </div>
                     <div class="login">
                         <?php
+                        // Kiểm tra xem người dùng đã đăng nhập hay chưa
                         if (isset($_COOKIE['username'])) {
                             echo '<a style="color:black;" href="">' . $_COOKIE['username'] . '</a>
                             <div class="logout">
@@ -116,6 +123,7 @@ require_once('../database/dbhelper.php');
     <?php require_once('../database/config.php'); ?>
     <?php require_once('../database/dbhelper.php'); ?>
     <?php
+    // Xử lý đổi mật khẩu khi nút "submit" được nhấn
     if (isset($_POST["submit"]) && $_POST["password"] != '' && $_POST["password-new"] != '' && $_POST["repassword-new"] != '') {
         $password = $_POST["password"];
         // $password = md5($password);
@@ -166,18 +174,6 @@ require_once('../database/dbhelper.php');
                      </script>';
             }
         }
-
-
-        // $username = trim(strip_tags($_POST['username']));
-        // $password = trim(strip_tags($_POST['password']));
-        // $password = md5($password);
-
-        // session_start();
-
-        // setcookie("username", $username, time() + 30 * 24 * 60 * 60, '/');
-        // setcookie("password", $password, time() + 30 * 24 * 60 * 60, '/');
-        // setcookie("username", "", time() - 3600);
-        // setcookie("password", "", time() - 3600);
     }
     ?>
 </body>

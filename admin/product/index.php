@@ -1,4 +1,5 @@
 <?php
+// Import file chứa hàm thực hiện kết nối CSDL và thực thi truy vấn
 require_once('../database/dbhelper.php');
 
 ?>
@@ -41,6 +42,7 @@ require_once('../database/dbhelper.php');
             <a href="add.php">
                 <button class=" btn btn-success" style="margin-bottom:20px">Thêm Sản Phẩm</button>
             </a>
+            <!-- Bảng hiển thị danh sách sản phẩm -->
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr style="font-weight: 500;">
@@ -57,7 +59,7 @@ require_once('../database/dbhelper.php');
                 </thead>
                 <tbody>
                     <?php
-                    // Lấy danh sách Sản Phẩm
+                     // Lấy danh sách Sản Phẩm và hiển thị trên bảng
                     if (!isset($_GET['page'])) {
                         $pg = 1;
                         echo 'Bạn đang ở trang: 1';
@@ -92,11 +94,7 @@ require_once('../database/dbhelper.php');
                     <td>' . $item['number'] . '</td>
                     <td>' . $item['content'] . '</td>
                     <td>' . $item['id_category'] . '</td>
-                    <td>
-                        <a href="add.php?id=' . $item['id'] . '">
-                            <button class=" btn btn-warning">Sửa</button> 
-                        </a> 
-                    </td>
+                 
                     <td>            
                     <button class="btn btn-danger" onclick="deleteProduct(' . $item['id'] . ')">Xoá</button>
                     </td>
@@ -116,8 +114,8 @@ require_once('../database/dbhelper.php');
             $conn = mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE);
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result)) {
-                $numrow = mysqli_num_rows($result);
-                $current_page = ceil($numrow / 5);
+                $numrow = mysqli_num_rows($result);//Đếm số sản phẩm trong CSDL
+                $current_page = ceil($numrow / 5);// Tính số trang cần hiển thị
                 // echo $current_page;
             }
             for ($i = 1; $i <= $current_page; $i++) {
@@ -137,6 +135,7 @@ require_once('../database/dbhelper.php');
     </div>
 
     </div>
+    <!-- Script để xác nhận xoá sản phẩm và thực hiện xoá bằng AJAX -->
     <script type="text/javascript">
         function deleteProduct(id) {
             var option = confirm('Bạn có chắc chắn muốn xoá sản phẩm này không?')
@@ -145,12 +144,12 @@ require_once('../database/dbhelper.php');
             }
 
             console.log(id)
-            //ajax - lenh post
+            // Sử dụng AJAX để gửi yêu cầu xoá sản phẩm
             $.post('ajax.php', {
                 'id': id,
                 'action': 'delete'
             }, function(data) {
-                location.reload()
+                location.reload()// Tải lại trang sau khi xoá sản phẩm
             })
         }
     </script>

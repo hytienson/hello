@@ -1,17 +1,21 @@
 <?php
-require_once('../database/dbhelper.php');
-$id = $name = '';
-if (!empty($_POST['name'])) {
-    $name = '';
+require_once('../database/dbhelper.php');//Kết nối đến tệp dbhelper.php để thực hiện các tác vụ liên quan đến cơ sở dữ liệu
+$id = $name = '';// Khởi tạo biến $id và $name
+// Kiểm tra xem trường tên đã được gửi đi hay chưa
+if (!empty($_POST['name'])){
+    $name = '';//Gán giá trị rỗng cho biến $name
+    // Kiểm tra xem trường tên đã được đặt hay chưa
     if (isset($_POST['name'])) {
-        $name = $_POST['name'];
-        $name = str_replace('"', '\\"', $name);
+        $name = $_POST['name'];// Lấy giá trị từ trường tên trong biểu mẫu
+        $name = str_replace('"', '\\"', $name);// Thay thế ký tự " bằng \"
     }
+    // Kiểm tra xem trường id đã được đặt hay chưa
     if (isset($_POST['id'])) {
-        $id = $_POST['id'];
+        $id = $_POST['id'];//Lấy giá trị từ trường id trong biểu mẫu
     }
+    // Kiểm tra xem biến $name có giá trị hay không
     if (!empty($name)) {
-        $created_at = $updated_at = date('Y-m-d H:s:i');
+        $created_at = $updated_at = date('Y-m-d H:s:i');// Gán thời gian hiện tại cho biến $created_at và $updated_at
         // Lưu vào DB
         if ($id == '') {
             // Thêm danh mục
@@ -22,20 +26,21 @@ if (!empty($_POST['name'])) {
             // Sửa danh mục
             $sql = 'update category set name="' . $name . '", updated_at="' . $updated_at . '" where id=' . $id;
         }
-        execute($sql);
-        header('Location: index.php');
+        execute($sql);// Thực thi truy vấn SQL
+        header('Location: index.php');// Chuyển hướng đến trang index.php
         die();
     }
 }
 
 
-
+// Kiểm tra và lấy thông tin danh mục từ cơ sở dữ liệu để hiển thị trên biểu mẫu
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = 'select * from category where id=' . $id;
-    $category = executeSingleResult($sql);
+    $id = $_GET['id'];// Lấy giá trị id từ URL
+    $sql = 'select * from category where id=' . $id;// Tạo truy vấn SQL để lấy thông tin danh mục dựa trên id
+    $category = executeSingleResult($sql);// Thực thi truy vấn và lấy kết quả trả về một mục
+    // Kiểm tra xem danh mục có tồn tại hay không
     if ($category != null) {
-        $name = $category['name'];
+        $name = $category['name'];// Gán giá trị tên từ cơ sở dữ liệu vào biến $name
     }
 }
 ?>

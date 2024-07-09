@@ -13,7 +13,7 @@ require_once('database/dbhelper.php');
     <link rel="stylesheet" href="css/details.css">
     <link rel="stylesheet" href="plugin/fontawesome/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <title>Holy Coffee</title>
+    <title>Bài tập lớn nhóm 5</title>
 </head>
 
 <body>
@@ -57,7 +57,7 @@ require_once('database/dbhelper.php');
                         }
                         $count = 0;
                         foreach ($cart as $item) {
-                            $count += $item['num']; // đếm tổng số item
+                            $count += $item['num']; // Đếm tổng số mặt hàng trong giỏ hàng
                         }
                         ?>
                         <span><?= $count ?></span>
